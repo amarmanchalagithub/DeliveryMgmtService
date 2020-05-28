@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ordermgmtDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AGENTS">
+          <Key>
+            <PropertyRef Name="AGENT_CODE" />
+          </Key>
+          <Property Name="AGENT_CODE" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="AGENT_NAME" Type="char" MaxLength="40" />
+          <Property Name="WORKING_AREA" Type="char" MaxLength="35" />
+          <Property Name="COMMISSION" Type="money" />
+          <Property Name="PHONE_NO" Type="char" MaxLength="15" />
+          <Property Name="COUNTRY" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUST_CODE" />
+          </Key>
+          <Property Name="CUST_CODE" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="CUST_NAME" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="CUST_CITY" Type="char" MaxLength="35" />
+          <Property Name="WORKING_AREA" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="CUST_COUNTRY" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="GRADE" Type="int" />
+          <Property Name="OPENING_AMT" Type="money" Nullable="false" />
+          <Property Name="RECEIVE_AMT" Type="money" Nullable="false" />
+          <Property Name="PAYMENT_AMT" Type="money" Nullable="false" />
+          <Property Name="OUTSTANDING_AMT" Type="money" Nullable="false" />
+          <Property Name="PHONE_NO" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="AGENT_CODE" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="ORD_NUM" />
+          </Key>
+          <Property Name="ORD_NUM" Type="money" Nullable="false" />
+          <Property Name="ORD_AMOUNT" Type="money" Nullable="false" />
+          <Property Name="ADVANCE_AMOUNT" Type="money" Nullable="false" />
+          <Property Name="ORD_DATE" Type="date" Nullable="false" />
+          <Property Name="CUST_CODE" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="AGENT_CODE" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="ORD_DESCRIPTION" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CUSTOMER__AGENT___6383C8BA">
+          <End Role="AGENTS" Type="Self.AGENTS" Multiplicity="1" />
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENTS">
+              <PropertyRef Name="AGENT_CODE" />
+            </Principal>
+            <Dependent Role="CUSTOMER">
+              <PropertyRef Name="AGENT_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__AGENT_CO__6754599E">
+          <End Role="AGENTS" Type="Self.AGENTS" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENTS">
+              <PropertyRef Name="AGENT_CODE" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="AGENT_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUST_COD__66603565">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUST_CODE" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CUST_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ordermgmtDBModelStoreContainer">
+          <EntitySet Name="AGENTS" EntityType="Self.AGENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CUSTOMER__AGENT___6383C8BA" Association="Self.FK__CUSTOMER__AGENT___6383C8BA">
+            <End Role="AGENTS" EntitySet="AGENTS" />
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__AGENT_CO__6754599E" Association="Self.FK__ORDERS__AGENT_CO__6754599E">
+            <End Role="AGENTS" EntitySet="AGENTS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUST_COD__66603565" Association="Self.FK__ORDERS__CUST_COD__66603565">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ordermgmtDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AGENT">
+          <Key>
+            <PropertyRef Name="AGENT_CODE" />
+          </Key>
+          <Property Name="AGENT_CODE" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AGENT_NAME" Type="String" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="WORKING_AREA" Type="String" MaxLength="35" FixedLength="true" Unicode="false" />
+          <Property Name="COMMISSION" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PHONE_NO" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="COUNTRY" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CUSTOMERs" Relationship="Self.FK__CUSTOMER__AGENT___6383C8BA" FromRole="AGENTS" ToRole="CUSTOMER" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.FK__ORDERS__AGENT_CO__6754599E" FromRole="AGENTS" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUST_CODE" />
+          </Key>
+          <Property Name="CUST_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CUST_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CUST_CITY" Type="String" MaxLength="35" FixedLength="true" Unicode="false" />
+          <Property Name="WORKING_AREA" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CUST_COUNTRY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GRADE" Type="Int32" />
+          <Property Name="OPENING_AMT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="RECEIVE_AMT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PAYMENT_AMT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="OUTSTANDING_AMT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PHONE_NO" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AGENT_CODE" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AGENT" Relationship="Self.FK__CUSTOMER__AGENT___6383C8BA" FromRole="CUSTOMER" ToRole="AGENTS" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.FK__ORDERS__CUST_COD__66603565" FromRole="CUSTOMER" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ORD_NUM" />
+          </Key>
+          <Property Name="ORD_NUM" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ORD_AMOUNT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ADVANCE_AMOUNT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ORD_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CUST_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AGENT_CODE" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ORD_DESCRIPTION" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AGENT" Relationship="Self.FK__ORDERS__AGENT_CO__6754599E" FromRole="ORDERS" ToRole="AGENTS" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK__ORDERS__CUST_COD__66603565" FromRole="ORDERS" ToRole="CUSTOMER" />
+        </EntityType>
+        <Association Name="FK__CUSTOMER__AGENT___6383C8BA">
+          <End Role="AGENTS" Type="Self.AGENT" Multiplicity="1" />
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENTS">
+              <PropertyRef Name="AGENT_CODE" />
+            </Principal>
+            <Dependent Role="CUSTOMER">
+              <PropertyRef Name="AGENT_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__AGENT_CO__6754599E">
+          <End Role="AGENTS" Type="Self.AGENT" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENTS">
+              <PropertyRef Name="AGENT_CODE" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="AGENT_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUST_COD__66603565">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUST_CODE" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CUST_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ordermgmtDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AGENTS" EntityType="Self.AGENT" />
+          <EntitySet Name="CUSTOMERs" EntityType="Self.CUSTOMER" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDER" />
+          <AssociationSet Name="FK__CUSTOMER__AGENT___6383C8BA" Association="Self.FK__CUSTOMER__AGENT___6383C8BA">
+            <End Role="AGENTS" EntitySet="AGENTS" />
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__AGENT_CO__6754599E" Association="Self.FK__ORDERS__AGENT_CO__6754599E">
+            <End Role="AGENTS" EntitySet="AGENTS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUST_COD__66603565" Association="Self.FK__ORDERS__CUST_COD__66603565">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ordermgmtDBModelStoreContainer" CdmEntityContainer="ordermgmtDBEntities">
+          <EntitySetMapping Name="AGENTS">
+            <EntityTypeMapping TypeName="ordermgmtDBModel.AGENT">
+              <MappingFragment StoreEntitySet="AGENTS">
+                <ScalarProperty Name="AGENT_CODE" ColumnName="AGENT_CODE" />
+                <ScalarProperty Name="AGENT_NAME" ColumnName="AGENT_NAME" />
+                <ScalarProperty Name="WORKING_AREA" ColumnName="WORKING_AREA" />
+                <ScalarProperty Name="COMMISSION" ColumnName="COMMISSION" />
+                <ScalarProperty Name="PHONE_NO" ColumnName="PHONE_NO" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="ordermgmtDBModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="CUST_CODE" ColumnName="CUST_CODE" />
+                <ScalarProperty Name="CUST_NAME" ColumnName="CUST_NAME" />
+                <ScalarProperty Name="CUST_CITY" ColumnName="CUST_CITY" />
+                <ScalarProperty Name="WORKING_AREA" ColumnName="WORKING_AREA" />
+                <ScalarProperty Name="CUST_COUNTRY" ColumnName="CUST_COUNTRY" />
+                <ScalarProperty Name="GRADE" ColumnName="GRADE" />
+                <ScalarProperty Name="OPENING_AMT" ColumnName="OPENING_AMT" />
+                <ScalarProperty Name="RECEIVE_AMT" ColumnName="RECEIVE_AMT" />
+                <ScalarProperty Name="PAYMENT_AMT" ColumnName="PAYMENT_AMT" />
+                <ScalarProperty Name="OUTSTANDING_AMT" ColumnName="OUTSTANDING_AMT" />
+                <ScalarProperty Name="PHONE_NO" ColumnName="PHONE_NO" />
+                <ScalarProperty Name="AGENT_CODE" ColumnName="AGENT_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="ordermgmtDBModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="ORD_NUM" ColumnName="ORD_NUM" />
+                <ScalarProperty Name="ORD_AMOUNT" ColumnName="ORD_AMOUNT" />
+                <ScalarProperty Name="ADVANCE_AMOUNT" ColumnName="ADVANCE_AMOUNT" />
+                <ScalarProperty Name="ORD_DATE" ColumnName="ORD_DATE" />
+                <ScalarProperty Name="CUST_CODE" ColumnName="CUST_CODE" />
+                <ScalarProperty Name="AGENT_CODE" ColumnName="AGENT_CODE" />
+                <ScalarProperty Name="ORD_DESCRIPTION" ColumnName="ORD_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
