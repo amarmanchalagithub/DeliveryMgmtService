@@ -1,0 +1,151 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sites_DeliverymgmtFunctionapp_name": {
+      "defaultValue": "DeliverymgmtFunctionapp",
+      "type": "String"
+    },
+    "ServicePlanNameForFucntionApp": {
+      "defaultValue": "ordermanagementserviceplan",
+      "type": "String"
+    }
+  },
+  "variables": 
+  {
+    "AppServicePlanID": "[resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanNameForFucntionApp'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-11-01",
+      "name": "[parameters('sites_DeliverymgmtFunctionapp_name')]",
+      "location": "East US",
+      "kind": "functionapp",
+      "identity": {
+                "type": "SystemAssigned"
+      },
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "concat('paratmeters('sites_DeliverymgmtFunctionapp_name')','.azurewebsites.net')",
+            "sslState": "Disabled",
+            "hostType": "Standard"
+          },
+          {
+            "name": "concat('paratmeters('sites_DeliverymgmtFunctionapp_name')','.scm.azurewebsites.net')",
+            "sslState": "Disabled",
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[variables('AppServicePlanID')]",
+        "reserved": false,
+        "isXenon": false,
+        "hyperV": false,
+        "siteConfig": {},
+        "scmSiteAlsoStopped": false,
+        "clientAffinityEnabled": true,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 1536,
+        "dailyMemoryTimeQuota": 0,
+        "httpsOnly": false,
+        "redundancyMode": "None"
+      }
+    },
+    {
+      "type": "microsoft.web/sites/config",
+      "apiversion": "2018-11-01",
+      "name": "[concat(parameters('sites_deliverymgmtfunctionapp_name'), '/web')]",
+      "location": "east us",
+      "dependson": [
+        "[resourceid('microsoft.web/sites', parameters('sites_deliverymgmtfunctionapp_name'))]"
+      ],
+      "properties": {
+        "numberofworkers": 1,
+        "defaultdocuments": [
+          "default.htm",
+          "default.html",
+          "default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php"
+        ],
+        "netframeworkversion": "v4.0",
+        "phpversion": "5.6",
+        "requesttracingenabled": false,
+        "remotedebuggingenabled": false,
+        "httploggingenabled": false,
+        "logsdirectorysizelimit": 35,
+        "detailederrorloggingenabled": false,
+        "publishingusername": "$deliverymgmtfunctionapp",
+        "scmtype": "none",
+        "use32bitworkerprocess": true,
+        "websocketsenabled": false,
+        "alwayson": true,
+        "managedpipelinemode": "integrated",
+        "virtualapplications": [
+          {
+            "virtualpath": "/",
+            "physicalpath": "site\\wwwroot",
+            "preloadenabled": true
+          }
+        ],
+        "loadbalancing": "leastrequests",
+        "experiments": {
+          "rampuprules": []
+        },
+        "autohealenabled": false,
+        "cors": {
+          "allowedorigins": [
+            "https://functions.azure.com",
+            "https://functions-staging.azure.com",
+            "https://functions-next.azure.com"
+          ],
+          "supportcredentials": false
+        },
+        "localmysqlenabled": false,
+        "managedserviceidentityid": 9928,
+        "ipsecurityrestrictions": [
+          {
+            "ipaddress": "any",
+            "action": "allow",
+            "priority": 1,
+            "name": "allow all",
+            "description": "allow all access"
+          }
+        ],
+        "scmipsecurityrestrictions": [
+          {
+            "ipaddress": "any",
+            "action": "allow",
+            "priority": 1,
+            "name": "allow all",
+            "description": "allow all access"
+          }
+        ],
+        "scmipsecurityrestrictionsusemain": false,
+        "http20enabled": false,
+        "mintlsversion": "1.2",
+        "ftpsstate": "allallowed",
+        "reservedinstancecount": 0
+      }
+    },
+    {
+      "type": "microsoft.web/sites/hostnamebindings",
+      "apiversion": "2018-11-01",
+      "name": "[concat(parameters('sites_deliverymgmtfunctionapp_name'), '/', parameters('sites_deliverymgmtfunctionapp_name'), '.azurewebsites.net')]",
+      "location": "east us",
+      "dependson": [
+        "[resourceid('microsoft.web/sites', parameters('sites_deliverymgmtfunctionapp_name'))]"
+      ],
+      "properties": {
+        "sitename": "deliverymgmtfunctionapp",
+        "hostnametype": "verified"
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "secretName": {
+      "value": "storgasassecret"
+    },
+    "keyVaultName": {
+      "value": "apideliveryservcssecrets"
+    },
+    "StorageAccountName": {
+      "value": "ordermgmtstrgacnt"
+    },
+    "vaults_deliverymgmtkeyVault_name": {
+      "value": "apideliveryservcssecrets"
+    },
+    "keysPermissions": {
+      "value": [
+        "all",
+        "encrypt",
+        "decrypt",
+        "wrapKey",
+        "unwrapKey",
+        "sign",
+        "verify",
+        "get",
+        "list",
+        "create",
+        "update"
+      ]
+    },
+    "secretsPermissions": {
+      "value": [
+        "get",
+        "list",
+        "backup"
+      ]
+    },
+    "FunctionAppName": {
+      "value": "DeliverymgmtFunctionapp"
+    }
+  }
+}

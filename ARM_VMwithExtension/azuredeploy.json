@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachines_webservervm01_name": {
+      "defaultValue": "webservervm01",
+      "type": "String"
+    },
+    "disks_webservervm01_disk1_7da1583305e5442396b21e946ae4d86b_externalid": {
+      "defaultValue": "/subscriptions/74502350-1175-4027-bd07-fd841b8195cc/resourceGroups/MYORDERMGMTRG/providers/Microsoft.Compute/disks/webservervm01_disk1_7da1583305e5442396b21e946ae4d86b",
+      "type": "String"
+    },
+    "networkInterfaces_webservervm0133_externalid": {
+      "defaultValue": "/subscriptions/74502350-1175-4027-bd07-fd841b8195cc/resourceGroups/MyOrdermgmtRG/providers/Microsoft.Network/networkInterfaces/webservervm0133",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2019-07-01",
+      "name": "[parameters('virtualMachines_webservervm01_name')]",
+      "location": "eastus",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B1ms"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2019-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Windows",
+            "name": "[concat(parameters('virtualMachines_webservervm01_name'), '_disk1_7da1583305e5442396b21e946ae4d86b')]",
+            "createOption": "FromImage",
+            "caching": "ReadWrite",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS",
+              "id": "[parameters('disks_webservervm01_disk1_7da1583305e5442396b21e946ae4d86b_externalid')]"
+            },
+            "diskSizeGB": 127
+          },
+          "dataDisks": []
+        },
+        "osProfile": {
+          "computerName": "[parameters('virtualMachines_webservervm01_name')]",
+          "adminUsername": "amarnath.manchala",
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true
+          },
+          "secrets": [],
+          "allowExtensionOperations": true,
+          "requireGuestProvisionSignal": true
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[parameters('networkInterfaces_webservervm0133_externalid')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "https://sqlvazphhmkferafz2.blob.core.windows.net/"
+          }
+        }
+      }
+    }
+  ]
+}

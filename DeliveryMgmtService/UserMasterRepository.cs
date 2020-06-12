@@ -15,7 +15,7 @@ namespace DeliveryMgmtService
 
         public bool ValidateUser(string username, string password)
         {
-            if (username == "amarnath" && password == "Am@rn2t8")
+            if (username == "amarnath" && password == "Am@r2020")
             {
                 return true;
             }
