@@ -46,7 +46,7 @@ namespace Function_Load_SeedData
                 cloudTable.CreateIfNotExists();
 
 
-                //Delete Rows
+                //Delete Rows-Updated from visual Studio code
                 
                 var query = new TableQuery<ServiceAPITokens>();
                 var result = await cloudTable.ExecuteQuerySegmentedAsync(query, null);
