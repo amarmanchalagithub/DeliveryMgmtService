@@ -51,7 +51,7 @@ namespace Function_Load_SeedData
                 var query = new TableQuery<ServiceAPITokens>();
                 var result = await cloudTable.ExecuteQuerySegmentedAsync(query, null);
 
-                // Create the batch operation.
+                // Create the batch operation.  
                 TableBatchOperation batchDeleteOperation = new TableBatchOperation();
 
                 foreach (var row in result)
